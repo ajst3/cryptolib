@@ -2,6 +2,8 @@
 * Functions that implement blowfish algorithm.
 */
 #include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
 #include "constants.h"
 
 #define KEYSIZE 256
@@ -13,32 +15,61 @@ class blowfish {
 private:
   int *key;
   unsigned int parr[PARRSIZE];
-  char *ptext
+  char *ptext;
 
-  /*
-  * Initializing parray with input key
-  */
-  void initPArray()
-  {
-    int i;
-    for(i = 0; i < PARRSIZE; i+=4)
-    {
-      parr[i+3] = parray[i-4] ^ key[(i+3) % (KEYSIZE/8)]; // 3
-      parr[i+2] = parray[i-4] ^ key[(i+2) % (KEYSIZE/8)]; // 2
-      parr[i+1] = parray[i-4] ^ key[(i+1) % (KEYSIZE/8)]; // 1
-      parr[i] = parray[i-4] ^ key[(i) % (KEYSIZE/8)]; // 0
-    }
-  }
+  void initPArray();
 
 public:
   // Constructor
-  blowfish(int *k, char *plaintext)
-  {
-    key = k;
-    parr = malloc(sizeof(unsigned long) * PARRSIZE);
-    ptext = plaintext;
-  }
+  blowfish(int *k, char *plaintext);
+
+  void initPArrayTest();
 
   // Deconstructor
-  virtual ~name_t();
+  ~blowfish(void);
 };
+
+blowfish::blowfish(int *k, char *plaintext)
+{
+  key = k;
+  ptext = plaintext;
+}
+
+blowfish::~blowfish()
+{
+
+}
+
+/*
+* Initializing parray with input key
+*/
+void blowfish::initPArray()
+{
+  int i;
+  for(i = 0; i < PARRSIZE; ++i)
+  {
+    parr[i] = parray[i] ^ key[(i) % (KEYSIZE/32)]; // 0
+  }
+}
+
+void blowfish::initPArrayTest()
+{
+  printf("before = %d\n", parray[7]);
+  initPArray();
+  printf("after = %d\n", parr[7]);
+}
+
+int main(int argc, char const *argv[]) {
+  srand(time(NULL));
+  int key[KEYSIZE/32];
+  int i;
+  for(i = 0; i < KEYSIZE/32; ++i)
+  {
+    key[i] = rand();
+  }
+  char test[] = "hello";
+  blowfish bfishtest = blowfish(key, test);
+  printf("made blowfish obj\n");
+  bfishtest.initPArrayTest();
+  return 0;
+}
