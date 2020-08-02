@@ -1,9 +1,6 @@
 
-blowfishtest: blowfish.cpp textmanager.cpp textmanager.hpp blowfish.hpp
-	g++ -Wall $^ -o $@
+algorithms:
+	$(MAKE) -C /algobjs
 
-blowfish.o: blowfish.cpp textmanager.cpp textmanager.hpp blowfish.hpp
-	g++ -Wall $^ -o $@
-
-clean:
-	rm -f *.o
+tester: algorithms
+	g++ -Wall -I /algobjs /algobjs/algorithms.o -o $^
