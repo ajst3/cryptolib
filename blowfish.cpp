@@ -10,8 +10,8 @@
 
 #define KEYSIZE 256
 #define PARRSIZE 18
-#define MAXINTB (unsigned int) 2 << 31
-//4294967296
+#define MAXINTB (unsigned int) 1 << 31
+//429496729
 
 using namespace std;
 
@@ -199,7 +199,7 @@ int main(int argc, char const *argv[]) {
   {
     key[i] = rand();
   }
-  char test[] = "01234567";
+  char test[] = "hellowo";
   blowfish bfishtest = blowfish(key, test);
   printf("made blowfish obj\n");
   bfishtest.initPArrayTest();
