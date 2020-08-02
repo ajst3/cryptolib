@@ -1,14 +1,16 @@
 
 .DEFAULT_GOAL := algorithms
 
-algorithms.o: blowfish.o
-	g++ -Wall $^ -o $@
+CPPFLAGS = -Wall -c
+CXX = g++
 
-blowfishtest: blowfish.cpp textmanager.cpp textmanager.hpp blowfish.hpp
-	g++ -Wall $^ -o $@
+algorithms: blowfish.o textmanager.o
 
-blowfish.o: blowfish.cpp textmanager.cpp textmanager.hpp blowfish.hpp
-	g++ -Wall $^ -o $@
+blowfish.o: blowfish.cpp blowfish.hpp
+	$(CXX) $(CPPFLAGS) $^
+
+textmanager.o: textmanager.cpp textmanager.hpp
+	$(CXX) $(CPPFLAGS) $^
 
 clean:
 	rm -f *.o

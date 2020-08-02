@@ -1,6 +1,9 @@
 #include "textmanager.hpp"
+#include "cryptobase.hpp"
 #define PARRSIZE 18
-class blowfish: public cryptobase {
+#define KEYSIZE 256
+#define PARRSIZE 18
+class blowfish : public cryptobase {
 private:
   int *key;
   unsigned int parr[PARRSIZE];

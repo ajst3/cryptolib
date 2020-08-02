@@ -1,6 +1,10 @@
 
-algorithms:
-	$(MAKE) -C /algobjs
+CPPFLAGS = -Wall
+CXX = g++
+INCLUDES = algobjs/*.o
 
-tester: algorithms
-	g++ -Wall -I /algobjs /algobjs/algorithms.o -o $^
+algorithms:
+	$(MAKE) -C algobjs
+
+tester: algorithms tester.cpp
+	$(CXX) $(CPPFLAGS) -I algobjs $(INCLUDES) tester.cpp -o $@

@@ -8,14 +8,12 @@
 #include "blowfishconstants.h"
 #include "blowfish.hpp"
 
-#define KEYSIZE 256
-#define PARRSIZE 18
 #define MAXINTB (unsigned int) 1 << 31
 
 using namespace std;
 
 blowfish::blowfish(int *k, char *text)
-  : ptextman (plaintext)
+  : ptextman (text)
 {
   key = k;
   ptext = text;
@@ -24,7 +22,7 @@ blowfish::blowfish(int *k, char *text)
 
 blowfish::~blowfish()
 {
-  free(ptextman);
+
 }
 
 /*
@@ -180,7 +178,7 @@ char* blowfish::decryptBlock()
 {
   char *blockpart1 = ptextman.substring(0);
   char *blockpart2 = ptextman.substring(4);
-  return decryptBlock(blockpart1, blockpart2);
+  return decryptblockp(blockpart1, blockpart2);
 }
 
 void blowfish::nextBlock(char *next)
@@ -232,22 +230,4 @@ void blowfish::decryptblockTest(char *todecrypt)
   splitblock(todecrypt, b1, b2);
   char *decres = decryptblockp(b1, b2);
   printf("after decrypt = %s\n", decres);
-}
-
-int main(int argc, char const *argv[]) {
-  srand(time(NULL));
-  //srand(100);
-  int key[KEYSIZE/32];
-  int i;
-  for(i = 0; i < KEYSIZE/32; ++i)
-  {
-    key[i] = rand();
-  }
-  char test[] = "hellowo";
-  blowfish bfishtest = blowfish(key, test);
-  printf("made blowfish obj\n");
-  bfishtest.initPArrayTest();
-  bfishtest.roundTest();
-  bfishtest.encryptblockTest();
-  return 0;
 }
