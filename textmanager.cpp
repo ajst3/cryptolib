@@ -2,6 +2,7 @@
 * Class that manages the plaintext for the crypto algorithm.
 */
 #include <stdlib.h>
+#include <stdio.h>
 #include "textmanager.hpp"
 
 using namespace std;
@@ -24,9 +25,10 @@ char* textmanager::substring(int begin)
   char *sub = (char *) malloc(sizeof(char) * 4);
   int end = begin + 4;
   int i;
+  int s = 0;
   for(i = begin; i < end; ++i)
   {
-    sub[i] = txt[i];
+    sub[s++] = txt[i];
   }
   return sub;
 }
@@ -36,13 +38,8 @@ char* textmanager::substring(int begin)
 */
 char *xorwithpval(unsigned int pval, char *part)
 {
-  char *afterxor = (char *) malloc(sizeof(char) * 4);
-  int i;
-  for(i = 0; i < 4; ++i)
-  {
-    afterxor[i] = part[i] ^ (pval >> (i * 8));
-  }
-  return afterxor;
+  char *pchar = tochararray(pval);
+  return xortwochararray(pchar, part);
 }
 
 char *xortwochararray(char *x, char *y)
@@ -62,7 +59,41 @@ char *tochararray(unsigned int input)
   int i;
   for(i = 0; i < 4; ++i)
   {
-    result[i] = (input >> (i * 8)) & 0xff;
+    result[i] = (input >> (i * 8)) & 0xFF;
   }
   return result;
+}
+
+void copytoarray(char *dest, char *p1, char *p2)
+{
+  int i;
+  int s = 0;
+  for(i = 0; i < 8; ++i)
+  {
+    if(i < 4)
+    {
+      dest[i] = p1[i];
+    }
+    else
+    {
+      dest[i] = p2[s++];
+    }
+  }
+}
+
+void splitblock(char *block, char *p1, char *p2)
+{
+  int i;
+  int s = 0;
+  for(i = 0; i < 8; ++i)
+  {
+    if(i < 4)
+    {
+      p1[i] = block[i];
+    }
+    else
+    {
+      p2[s++] = block[i];
+    }
+  }
 }
