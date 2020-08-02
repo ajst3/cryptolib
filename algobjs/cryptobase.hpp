@@ -5,7 +5,6 @@
 
 class cryptobase {
 public:
-  virtual void nextBlock(char *next) = 0;
-  virtual char *encryptBlock() = 0;
-  virtual char *decryptBlock() = 0;
+  virtual char *encryptBlock(char *block) = 0;
+  virtual char *decryptBlock(char *block) = 0;
 };

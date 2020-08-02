@@ -12,12 +12,10 @@
 
 using namespace std;
 
-blowfish::blowfish(int *k, char *text)
-  : ptextman (text)
+blowfish::blowfish(int *k)
 {
   key = k;
-  ptext = text;
-  ptextman = textmanager(ptext);
+  initPArray();
 }
 
 blowfish::~blowfish()
@@ -167,23 +165,20 @@ char* blowfish::decryptblockp(char *p1, char *p2)
   return decblock;
 }
 
-char* blowfish::encryptBlock()
+char* blowfish::encryptBlock(char *block)
 {
+  textmanager ptextman = textmanager(block);
   char *blockpart1 = ptextman.substring(0);
   char *blockpart2 = ptextman.substring(4);
   return encryptblockp(blockpart1, blockpart2);
 }
 
-char* blowfish::decryptBlock()
+char* blowfish::decryptBlock(char *block)
 {
+  textmanager ptextman = textmanager(block);
   char *blockpart1 = ptextman.substring(0);
   char *blockpart2 = ptextman.substring(4);
   return decryptblockp(blockpart1, blockpart2);
-}
-
-void blowfish::nextBlock(char *next)
-{
-  ptextman = textmanager(next);
 }
 
 /*
@@ -197,8 +192,9 @@ void blowfish::initPArrayTest()
   printf("after = %d\n", parr[7]);
 }
 
-void blowfish::roundTest()
+void blowfish::roundTest(char *block)
 {
+  textmanager ptextman = textmanager(block);
   char *blockpart1 = ptextman.substring(0);
   char *blockpart2 = ptextman.substring(4);
   printf("first block = %s\n", blockpart1);
@@ -210,8 +206,9 @@ void blowfish::roundTest()
   free(res);
 }
 
-void blowfish::encryptblockTest()
+void blowfish::encryptblockTest(char *block)
 {
+  textmanager ptextman = textmanager(block);
   char *blockpart1 = ptextman.substring(0);
   char *blockpart2 = ptextman.substring(4);
   printf("first block = %s\n", blockpart1);

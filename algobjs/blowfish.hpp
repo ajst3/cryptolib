@@ -7,8 +7,6 @@ class blowfish : public cryptobase {
 private:
   int *key;
   unsigned int parr[PARRSIZE];
-  char *ptext;
-  textmanager ptextman;
 
   void initPArray();
   char *round(int rnum, char *plaintextpart1, char *plaintextpart2,
@@ -18,15 +16,14 @@ private:
   char *decryptblockp(char *p1, char *p2);
 
 public:
-  blowfish(int *k, char *text);
-  char *encryptBlock();
-  char *decryptBlock();
-  void nextBlock(char *nextBlock);
+  blowfish(int *k);
+  char *encryptBlock(char *block);
+  char *decryptBlock(char *block);
   ~blowfish(void);
 
   // Test Functions
   void initPArrayTest();
-  void roundTest();
-  void encryptblockTest();
+  void roundTest(char *block);
+  void encryptblockTest(char *block);
   void decryptblockTest(char *todecrypt);
 };
