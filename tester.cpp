@@ -8,18 +8,18 @@ using namespace std;
 
 int main(int argc, char const *argv[]) {
   srand(time(NULL));
-  //srand(100);
   int key[KEYSIZE/32];
   int i;
   for(i = 0; i < KEYSIZE/32; ++i)
   {
     key[i] = rand();
   }
-  char test[] = "hellowo";
-  blowfish bfishtest = blowfish(key, test);
-  printf("made blowfish obj\n");
-  bfishtest.initPArrayTest();
-  bfishtest.roundTest();
-  bfishtest.encryptblockTest();
+  char test[] = "axtkgh7";
+  printf("encrypting %s\n", test);
+  blowfish bfishtest = blowfish(key);
+  char *encres = bfishtest.encryptBlock(test);
+  printf("encres = %s\n", encres);
+  char *decres = bfishtest.decryptBlock(encres);
+  printf("decres = %s\n", decres);
   return 0;
 }
