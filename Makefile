@@ -1,10 +1,10 @@
 
-CPPFLAGS = -Wall
-CXX = g++
-INCLUDES = algobjs/*.o
+.DEFAULT_GOAL := all
+
+all: algorithms crypter
 
 algorithms:
-	$(MAKE) -C algobjs
+	$(MAKE) -C src/algobjs
 
-tester: algorithms tester.cpp
-	$(CXX) $(CPPFLAGS) -I algobjs $(INCLUDES) tester.cpp -o $@
+crypter:
+	$(MAKE) -C src/crypters
