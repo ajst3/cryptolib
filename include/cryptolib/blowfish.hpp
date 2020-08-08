@@ -1,4 +1,7 @@
+#ifndef BLOWFISH
+#define BLOWFISH
 #include "cryptobase.hpp"
+
 #define PARRSIZE 18
 #define KEYSIZE 256
 #define PARRSIZE 18
@@ -26,3 +29,5 @@ public:
   void encryptblockTest(char *block);
   void decryptblockTest(char *todecrypt);
 };
+
+#endif

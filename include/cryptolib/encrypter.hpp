@@ -1,3 +1,6 @@
+#ifndef ENCRYPTER
+#define ENCRYPTER
+
 #include "cryptobase.hpp"
 class encrypter {
 private:
@@ -14,3 +17,5 @@ public:
   char *encrypt(cryptobase *algorithm, int blockmode, char *iv);
   ~encrypter(void);
 };
+
+#endif

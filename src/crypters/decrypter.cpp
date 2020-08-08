@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "textmanager.hpp"
+#include "../textmanager.hpp"
 #include <cryptolib/decrypter.hpp>
 #include <cryptolib/blockmodes.hpp>
 
@@ -34,12 +34,12 @@ char* decrypter::nextBlock()
   int start = blocknum * BLOCKSIZE;
   for(i = blocknum * BLOCKSIZE; i < BLOCKSIZE + start; ++i)
   {
-    next[s++] = fullciphertext[i];
     if(i > textlen)
     {
       free(next);
       return NULL;
     }
+    next[s++] = fullciphertext[i];
   }
   ++blocknum;
   return next;
@@ -58,17 +58,18 @@ char* decrypter::decrypt(cryptobase *algorithm, int blockmode, char *iv)
     }
 
     char *toxor = algorithm->decryptBlock(next);
-    char *toappend = xortwochararray(toxor, prev);
-
-    if(prev != iv) // check to make sure prev is not pointing to the stack
+    char *toappend = xortwochararray(toxor, prev, BLOCKSIZE);
+    if(prev != iv)
     {
       free(prev);
     }
+
     prev = next;
 
     appendtochararray(plaintext, toappend, blocknum - 1, BLOCKSIZE);
     free(toappend);
     free(toxor);
   }
+  plaintext[((blocknum + 1) * BLOCKSIZE) - 1] = '\0';
   return plaintext;
 }

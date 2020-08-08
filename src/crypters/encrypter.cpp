@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "textmanager.hpp"
+#include "../textmanager.hpp"
 #include <cryptolib/encrypter.hpp>
 #include <cryptolib/blockmodes.hpp>
 
@@ -34,12 +34,12 @@ char* encrypter::nextBlock()
   int start = blocknum * BLOCKSIZE;
   for(i = blocknum * BLOCKSIZE; i < BLOCKSIZE + start; ++i)
   {
-    next[s++] = fulltext[i];
     if(i > textlen)
     {
       free(next);
       return NULL;
     }
+    next[s++] = fulltext[i];
   }
   ++blocknum;
   return next;
@@ -58,9 +58,8 @@ char* encrypter::encrypt(cryptobase *algorithm, int blockmode, char *iv)
       break;
     }
 
-    char *toencrypt = xortwochararray(next, prev);
-    free(next);
-    if(prev != iv) // check to make sure prev is not pointing to the stack
+    char *toencrypt = xortwochararray(next, prev, BLOCKSIZE);
+    if(prev != iv)
     {
       free(prev);
     }
@@ -68,6 +67,7 @@ char* encrypter::encrypt(cryptobase *algorithm, int blockmode, char *iv)
     prev = algorithm->encryptBlock(toencrypt);
     appendtochararray(ciphertext, prev, blocknum - 1, BLOCKSIZE);
     free(toencrypt);
+    free(next);
   }
   return ciphertext;
 }

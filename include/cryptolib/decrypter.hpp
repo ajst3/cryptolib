@@ -1,3 +1,5 @@
+#ifndef DECRYPTER
+#define DECRYPTER
 #include "cryptobase.hpp"
 class decrypter {
 private:
@@ -14,3 +16,5 @@ public:
   char *decrypt(cryptobase *algorithm, int blockmode, char *iv);
   ~decrypter(void);
 };
+
+#endif

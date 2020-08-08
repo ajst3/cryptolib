@@ -8,10 +8,9 @@ INCLUDES = -I../../include
 all: crypters
 
 crypters: encrypter.o decrypter.o
-	ar rcs libcrypters.a $^
 
 .cpp.o:
 	$(CXX) $(CPPFLAGS) $(INCLUDES) $^
 
 clean:
-	rm -f *.o libcrypters.a
+	rm -f *.o

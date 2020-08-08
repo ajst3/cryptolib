@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "blowfishconstants.hpp"
-#include "textmanager.hpp"
+#include "../textmanager.hpp"
 #include <cryptolib/blowfish.hpp>
 
 #define MAXINTB (unsigned int) 1 << 31
@@ -57,7 +57,7 @@ char* blowfish::round(int rnum, char *plaintextpart1, char *plaintextpart2,
   {
     right = xorwithpval(parr[17 - rnum], plaintextpart1);
   }
-  char *left = xortwochararray(fblock(right), plaintextpart2);
+  char *left = xortwochararray(fblock(right), plaintextpart2, 4);
   char *rblock = (char *) malloc(sizeof(char) * 8);
   copytoarray(rblock, left, right);
   free(left);
@@ -111,10 +111,6 @@ char* blowfish::encryptblockp(char *p1, char *p2)
       inter = round(i, p1inter, p2inter, 1);
     }
     splitblock(inter, p1inter, p2inter);
-    if(i == 0 || i == 3)
-    {
-      printf("inter test = %s,   %s,    %s\n", p1inter, p2inter, inter);
-    }
     free(inter);
   }
 
@@ -150,10 +146,6 @@ char* blowfish::decryptblockp(char *p1, char *p2)
       inter = round(i, p1inter, p2inter, 0);
     }
     splitblock(inter, p1inter, p2inter);
-    if(i == 0)
-    {
-      printf("inter test = %s,   %s,    %s\n", p1inter, p2inter, inter);
-    }
     free(inter);
   }
 

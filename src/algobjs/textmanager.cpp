@@ -3,7 +3,7 @@
 */
 #include <stdlib.h>
 #include <stdio.h>
-#include "textmanager.hpp"
+#include "../textmanager.hpp"
 
 using namespace std;
 
@@ -41,18 +41,18 @@ char* textmanager::substring(int begin)
 char *xorwithpval(unsigned int pval, char *part)
 {
   char *pchar = tochararray(pval);
-  return xortwochararray(pchar, part);
+  return xortwochararray(pchar, part, 4);
 }
 
 /*
 * Returns a pointer to the char array containing
 * the result of xoring the two given char arrays.
 */
-char *xortwochararray(char *x, char *y)
+char *xortwochararray(char *x, char *y, int arrsize)
 {
-  char *afterxor = (char *) malloc(sizeof(char) * 4);
+  char *afterxor = (char *) malloc(sizeof(char) * arrsize);
   int i;
-  for(i = 0; i < 4; ++i)
+  for(i = 0; i < arrsize; ++i)
   {
     afterxor[i] = x[i] ^ y[i];
   }
