@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <time.h>
-#include "blowfishconstants.h"
+#include "blowfishconstants.hpp"
 #include "textmanager.hpp"
 #include <cryptolib/blowfish.hpp>
 
