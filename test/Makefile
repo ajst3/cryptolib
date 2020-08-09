@@ -2,7 +2,7 @@
 CPPFLAGS = -Wall
 CXX = g++
 LIBDIR = -L..
-LIBS = -lcryptolib
+LIBS = -lcryptolib -lpthread
 INCLUDES = -I../include
 OBJECTS = testCBC testblowfish
 

@@ -45,9 +45,8 @@ char* encrypter::nextBlock()
   return next;
 }
 
-char* encrypter::encrypt(cryptobase *algorithm, int blockmode, char *iv)
+void encrypter::cbcmode(cryptobase *algorithm, char *iv)
 {
-  // for now only one block mode (CBC)
   char *prev = iv;
 
   while(true)
@@ -68,6 +67,14 @@ char* encrypter::encrypt(cryptobase *algorithm, int blockmode, char *iv)
     appendtochararray(ciphertext, prev, blocknum - 1, BLOCKSIZE);
     free(toencrypt);
     free(next);
+  }
+}
+
+char* encrypter::encrypt(cryptobase *algorithm, int blockmode, char *iv)
+{
+  if(blockmode == CBC or blockmode == CBC_PARALLEL)
+  {
+    cbcmode(algorithm, iv);
   }
   return ciphertext;
 }

@@ -5,6 +5,7 @@
 #include <cryptolib/blowfish.hpp>
 #include <cryptolib/encrypter.hpp>
 #include <cryptolib/decrypter.hpp>
+#include <cryptolib/blockmodes.hpp>
 
 using namespace std;
 
@@ -21,10 +22,10 @@ int main(int argc, char const *argv[]) {
   blowfish bfish = blowfish(key);
   encrypter enc = encrypter(test);
   char iv[] = "ghflsjo8";
-  char * ciphertext = enc.encrypt(&bfish, 0, iv);
+  char * ciphertext = enc.encrypt(&bfish, CBC_PARALLEL, iv);
   printf("encres = %s\n", ciphertext);
   decrypter dec = decrypter(ciphertext);
-  char *decres = dec.decrypt(&bfish, 0, iv);
+  char *decres = dec.decrypt(&bfish, CBC_PARALLEL, iv);
   printf("decres = %s\n", decres);
   return 0;
 }

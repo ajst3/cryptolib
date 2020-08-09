@@ -10,7 +10,7 @@ private:
   char *ciphertext;
 
   char *nextBlock();
-  char *encryptBlock();
+  void cbcmode(cryptobase *algorithm, char *iv);
 
 public:
   encrypter(char *ft);
