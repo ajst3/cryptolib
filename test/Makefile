@@ -1,13 +1,12 @@
 
 CPPFLAGS = -Wall
 CXX = g++
-LIBDIR = -L..
+LIBDIR = -L../install/lib
 LIBS = -lcryptolib -lpthread
-INCLUDES = -I../include
+INCLUDES = -I../install/include
 OBJECTS = testCBC testblowfish
 
 .cpp:
-	$(MAKE) -C ..
 	$(CXX) $(CPPFLAGS) $(INCLUDES) $^ -o $@ $(LIBDIR) $(LIBS)
 
 clean:
